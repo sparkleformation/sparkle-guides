@@ -8,6 +8,8 @@ anchors:
     url: "#apply-stack-implementation"
   - title: "Nested stack"
     url: "#nested-stack-implementation"
+  - title "Apply nested stack"
+    url: "#apply-nested-stack"
 ---
 
 ## Overview
@@ -315,4 +317,54 @@ $ bundle exec sfn print --file infrastructure
 
 There are a few things of note in this output. First, the `Stack` property is
 not a real resource property. It is used by SparkleFormation for template processing
-and is included in print functions to display the template in its entirety.
+and is included in print functions to display the template in its entirety. Next,
+the generated URLs are not real URLs. This is due to the SparkleFormation CLI not
+actually storing the templates in the remote bucket. Lastly, and most importantly,
+the parameters property of the `ComputesInfra` resource.
+
+~~~json
+"Parameters": {
+  "NetworkVpcId": {
+    "Fn::GetAtt": [
+      "NetworkInfra",
+      "Outputs.NetworkVpcId"
+    ]
+  },
+  "NetworkSubnetId": {
+    "Fn::GetAtt": [
+      "NetworkInfra",
+      "Outputs.NetworkSubnetId"
+    ]
+  }
+}
+~~~
+
+SparkleFormation registers outputs when processing templates and will automatically
+map outputs to subsequent stack resource parameters if they match. Cross stack resource
+dependencies are now explicitly defined allowing the orchestration API to automatically
+determine creation order as well as triggering updates when required.
+
+Now we can create our full infrastructure with a single command:
+
+~~~
+$ bundle exec sfn create sparkle-guide-infrastructure --file infrastructure
+~~~
+
+As SparkleFormation processes the nested templates for the `create` command, the SparkleFormation
+CLI will extract the nested templates, store them in the configured nesting bucket, and updates
+the template location URL in the resource.
+
+## Apply nested stack
+
+Nested stacks can be applied to disparate stacks in the same manner described in the apply
+stack implementation section. When the stack to be applied is a nested stack, SparkleFormation
+CLI will gather outputs from all the nested stacks, and then apply to the target command. This
+means using the `sparkle-guide-infrastructure` stack we previously built can be used for creating
+new `computes` stacks without being nested into the `infrastructure` template.
+
+~~~
+$ bundle exec sfn create sparkle-guide-computes-infra --file computes --apply-stack sparkle-guide-infrastructure
+~~~
+
+The ability to apply nested stacks to disparate stacks make it easy to provide resources to new
+stacks, or to test building new stacks in isolation before being nested into the root stack.
