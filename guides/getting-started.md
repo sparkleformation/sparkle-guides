@@ -58,38 +58,35 @@ the provider:
 
 ## Installation
 
-First, create a project directory. For this guide, we will use a directory
-named `sparkle-guide`:
+First, install the `sfn` gem:
 
 ~~~
-$ mkdir sparkle-guide
+$ gem install sfn
+~~~
+
+Now initialize a new project:
+
+~~~
+$ sfn init sparkle-guide
+~~~
+
+Finally change to the new project directory:
+
+~~~
 $ cd sparkle-guide
-~~~
-
-Create a Gemfile to provide a local bundle:
-
-~~~ruby
-# ./Gemfile
-source 'https://rubygems.org'
-
-gem 'sfn'
-~~~
-
-Install the bundle:
-
-~~~
-$ bundle install
 ~~~
 
 ## Configuration
 
-Generate the default configuration file:
+The `init` command will have automatically generated a configuration file
+within the project directory. To view the current configuration status the
+`conf` command can be used:
 
 ~~~
-$ bundle exec sfn conf --generate
+$ bundle exec sfn conf
 ~~~
 
-This command will create a new configuration file at `.sfn`. Open this file
+The configuration file for `sfn` is located within the `.sfn` file. Open this file
 and adjust the credentials section for your desired provider. The generated
 configuration file uses environment variables for provider configuration. This
 style of setup makes it easy to automatically set credential information using
@@ -110,17 +107,6 @@ $ bundle exec sfn list
 This should print a list of existing stacks on the configured provider. If no
 stacks exist, no entries will be shown. If an error message is received, check
 that the credentials information is properly set and try again.
-
-## Setup
-
-Create directories for [SparkleFormation Building Blocks](../sparkle_formation/building-blocks.html):
-
-~~~
-$ mkdir sparkleformation
-$ mkdir sparkleformation/registry
-$ mkdir sparkleformation/components
-$ mkdir sparkleformation/dynamics
-~~~
 
 ## Create a template
 
