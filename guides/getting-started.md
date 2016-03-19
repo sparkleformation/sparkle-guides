@@ -127,8 +127,8 @@ SparkleFormation.new(:compute, :provider => :aws) do
     sparkle_ssh_key_name.type 'String'
     sparkle_flavor do
       type 'String'
-      default 'm1.small'
-      allowed_values ['m1.small', 'm1.medium']
+      default 't2.micro'
+      allowed_values ['t2.micro', 't2.small']
     end
   end
 
