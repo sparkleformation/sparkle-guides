@@ -34,7 +34,7 @@ stacks, the _nested stack_ functionality is recommended.
 ### Nested stack
 
 _Nested stack_ functionality is a generic feature provided by the SparkleFormation
-library which the SparkleFormation CLI specializes based on the target provider.
+library which the SparkleFormation CLI then specializes based on the target provider.
 The _nested stack_ functionality utilizes a core feature provided by orchestration
 APIs. This features allows nesting stack resources within a stack allowing a
 parent stack to have many child stacks. By nesting stack resources, the provider
