@@ -8,7 +8,7 @@ anchors:
     url: "#apply-stack-implementation"
   - title: "Nested stack"
     url: "#nested-stack-implementation"
-  - title "Apply nested stack"
+  - title: "Apply nested stack"
     url: "#apply-nested-stack"
 ---
 
