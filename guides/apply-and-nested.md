@@ -354,6 +354,11 @@ As SparkleFormation processes the nested templates for the `create` command, the
 CLI will extract the nested templates, store them in the configured nesting bucket, and updates
 the template location URL in the resource.
 
+Using nested templates, `update` commands follow the same behavior as `create` commands. All nested
+templates are extracted and automatically uploaded prior to execution of the `update` request with
+the orchestration API. This results in _all_ nested stacks being automatically updated by the API
+as required based on dependent resource modifications.
+
 ## Apply nested stack
 
 Nested stacks can be applied to disparate stacks in the same manner described in the apply
