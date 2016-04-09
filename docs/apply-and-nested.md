@@ -173,6 +173,10 @@ SparkleFormation.new(:computes) do
     ssh_key_name.type 'String'
     network_vpc_id.type 'String'
     network_subnet_id.type 'String'
+    image_id_name do
+        type 'String'
+        default 'ami-63ac5803'
+    end
   end
 
   dynamic!(:ec2_security_group, :compute) do
@@ -190,7 +194,7 @@ SparkleFormation.new(:computes) do
 
   dynamic!(:ec2_instance, :micro) do
     properties do
-      image_id 'ami-25c52345'
+      image_id ref!(:image_id_name)
       instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
@@ -206,7 +210,7 @@ SparkleFormation.new(:computes) do
 
   dynamic!(:ec2_instance, :small) do
     properties do
-      image_id 'ami-25c52345'
+      image_id ref!(:image_id_name)
       instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
