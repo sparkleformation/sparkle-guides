@@ -191,7 +191,7 @@ SparkleFormation.new(:computes) do
   dynamic!(:ec2_instance, :micro) do
     properties do
       image_id 'ami-25c52345'
-      image_type 't2.micro'
+      instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
         ->{
@@ -207,7 +207,7 @@ SparkleFormation.new(:computes) do
   dynamic!(:ec2_instance, :small) do
     properties do
       image_id 'ami-25c52345'
-      image_type 't2.micro'
+      instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
         ->{
