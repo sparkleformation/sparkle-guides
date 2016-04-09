@@ -284,7 +284,7 @@ the outputs from the `sparkle-guide-network`.
 You can destroy the sparkle-guide-compute and sparkle-guide-network stacks as they will not be used in the next section.
 
 ~~~
-$ sfn destroy sparkle-guide-compute
+$ sfn destroy sparkle-guide-computes
 $ sfn destroy sparkle-guide-network
 ~~~
 
