@@ -83,7 +83,7 @@ SparkleFormation.new(:network) do
 
   dynamic!(:ec2_vpc, :network) do
     properties do
-      cidr_block join!(ref!(:cidr_prefix, '.0.0/24'))
+      cidr_block join!(ref!(:cidr_prefix), '.0.0/24')
       enable_dns_support true
       enable_dns_hostnames true
     end
@@ -127,7 +127,7 @@ SparkleFormation.new(:network) do
   dynamic!(:ec2_subnet, :network) do
     properties do
       availability_zone select!(0, azs!)
-      cidr_block join!(ref!(:cidr_prefix, '.0.0/24'))
+      cidr_block join!(ref!(:cidr_prefix), '.0.0/24')
       vpc_id ref!(:network_ec2_vpc)
     end
   end
@@ -143,7 +143,7 @@ SparkleFormation.new(:network) do
     network_vpc_id.value ref!(:network_ec2_vpc)
     network_subnet_id.value ref!(:network_ec2_subnet)
     network_route_table.value ref!(:network_ec2_route_table)
-    network_cidr.value join!(ref!(:cidr_prefix, '.0.0/24'))
+    network_cidr.value join!(ref!(:cidr_prefix), '.0.0/24')
   end
 
 end
