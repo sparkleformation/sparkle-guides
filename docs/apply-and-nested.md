@@ -277,6 +277,13 @@ During the create process, the SparkleFormation CLI will prompt for parameters. 
 default values for the VPC ID and subnet ID will be automatically inserted, matching
 the outputs from the `sparkle-guide-network`.
 
+You can destroy the sparkle-guide-compute and sparkle-guide-network stacks as they will not be used in the next section.
+
+~~~
+$ sfn destroy sparkle-guide-compute
+$ sfn destroy sparkle-guide-network
+~~~
+
 ## Nested stack implementation
 
 Now that our infrastructure has been successfully created using disparate stacks, lets
@@ -373,3 +380,9 @@ $ bundle exec sfn create sparkle-guide-computes-infra --file computes --apply-st
 
 The ability to apply nested stacks to disparate stacks make it easy to provide resources to new
 stacks, or to test building new stacks in isolation before being nested into the root stack.
+
+You can destroy the all the `infrastructure` related stacks with the command:
+
+~~~
+sfn destroy sparkle-guide-infrastructure
+~~~
