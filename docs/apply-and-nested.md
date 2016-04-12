@@ -83,7 +83,7 @@ SparkleFormation.new(:network) do
 
   dynamic!(:ec2_vpc, :network) do
     properties do
-      cidr_block join!(ref!(:cidr_prefix, '.0.0/24'))
+      cidr_block join!(ref!(:cidr_prefix), '.0.0/24')
       enable_dns_support true
       enable_dns_hostnames true
     end
@@ -127,7 +127,7 @@ SparkleFormation.new(:network) do
   dynamic!(:ec2_subnet, :network) do
     properties do
       availability_zone select!(0, azs!)
-      cidr_block join!(ref!(:cidr_prefix, '.0.0/24'))
+      cidr_block join!(ref!(:cidr_prefix), '.0.0/24')
       vpc_id ref!(:network_ec2_vpc)
     end
   end
@@ -143,7 +143,7 @@ SparkleFormation.new(:network) do
     network_vpc_id.value ref!(:network_ec2_vpc)
     network_subnet_id.value ref!(:network_ec2_subnet)
     network_route_table.value ref!(:network_ec2_route_table)
-    network_cidr.value join!(ref!(:cidr_prefix, '.0.0/24'))
+    network_cidr.value join!(ref!(:cidr_prefix), '.0.0/24')
   end
 
 end
@@ -173,6 +173,10 @@ SparkleFormation.new(:computes) do
     ssh_key_name.type 'String'
     network_vpc_id.type 'String'
     network_subnet_id.type 'String'
+    image_id_name do
+        type 'String'
+        default 'ami-63ac5803'
+    end
   end
 
   dynamic!(:ec2_security_group, :compute) do
@@ -190,8 +194,8 @@ SparkleFormation.new(:computes) do
 
   dynamic!(:ec2_instance, :micro) do
     properties do
-      image_id 'ami-25c52345'
-      image_type 't2.micro'
+      image_id ref!(:image_id_name)
+      instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
         ->{
@@ -206,8 +210,8 @@ SparkleFormation.new(:computes) do
 
   dynamic!(:ec2_instance, :small) do
     properties do
-      image_id 'ami-25c52345'
-      image_type 't2.micro'
+      image_id ref!(:image_id_name)
+      instance_type 't2.micro'
       key_name ref!(:ssh_key_name)
       network_interfaces array!(
         ->{
@@ -276,6 +280,13 @@ $ bundle exec sfn create sparkle-guide-computes --file computes --apply-stack sp
 During the create process, the SparkleFormation CLI will prompt for parameters. The
 default values for the VPC ID and subnet ID will be automatically inserted, matching
 the outputs from the `sparkle-guide-network`.
+
+You can destroy the sparkle-guide-compute and sparkle-guide-network stacks as they will not be used in the next section.
+
+~~~
+$ sfn destroy sparkle-guide-computes
+$ sfn destroy sparkle-guide-network
+~~~
 
 ## Nested stack implementation
 
@@ -373,3 +384,9 @@ $ bundle exec sfn create sparkle-guide-computes-infra --file computes --apply-st
 
 The ability to apply nested stacks to disparate stacks make it easy to provide resources to new
 stacks, or to test building new stacks in isolation before being nested into the root stack.
+
+You can destroy the all the `infrastructure` related stacks with the command:
+
+~~~
+sfn destroy sparkle-guide-infrastructure
+~~~

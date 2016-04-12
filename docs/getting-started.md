@@ -160,7 +160,7 @@ SparkleFormation.new(:compute, :provider => :heat) do
     sparkle_ssh_key_name.type 'String'
     sparkle_flavor do
       type 'String'
-      default 'm1.small'
+      default 't2.small'
       allowed_values ['m1.small', 'm1.medium']
     end
   end
@@ -334,7 +334,7 @@ Create a new file at `./sparkleformation/registry/instance_flavor.rb`
 
 ~~~ruby
 SfnRegistry.register(:instance_flavor) do
-  ['m1.small', 'm1.medium']
+  ['t2.micro', 't2.small']
 end
 ~~~
 
@@ -411,7 +411,7 @@ SparkleFormation.dynamic(:node) do |name, opts={}|
     set!("#{name}_ssh_key_name".to_sym).type 'String'
     set!("#{name}_flavor".to_sym) do
       type 'String'
-      default 'm1.small'
+      default 't2.small'
       allowed_values registry!(:instance_flavor)
     end
   end
@@ -442,7 +442,7 @@ SparkleFormation.dynamic(:node) do |name, opts={}|
     set!("#{name}_ssh_key_name".to_sym).type 'String'
     set!("#{name}_flavor".to_sym) do
       type 'String'
-      default 'm1.small'
+      default 't2.small'
       allowed_values registry!(:instance_flavor)
     end
   end
@@ -623,14 +623,21 @@ The `--defaults` flag will suppress prompts for stack parameters and use the exi
 stack. The result of this command will either explicitly state that no updates were performed, or the event stream
 will show that no resources were modified depending on the provider.
 
+At the end of the run it will ask:
+
+~~~
+[Sfn]: Apply this stack update? (Y/N):
+~~~
+
+You can answer Y.
+
 ### The real update (parameters)
 
 Now lets update the stack by modifying the paramters of the running stack. We will change the flavor of the instance
-which will result in the resource being replaced within the stack. Run the update command but do not provide any
-flags:
+which will result in the resource being replaced within the stack. Run the update command but do not provide the `--defaults` flag:
 
 ~~~
-$ sfn update sparkle-guide-compute
+$ sfn update sparkle-guide-compute --file compute
 ~~~
 
 Now `sfn` will prompt for parameter values. Notice that the default values are the values used when creating the
