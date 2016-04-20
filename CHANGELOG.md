@@ -1,3 +1,7 @@
+# v0.1.6
+* Fixes for syntax, instructions, and removal of m1 types (#8)
+ * Thanks @rberger!
+
 # v0.1.4
 * Update file system layout.
 * Fix YAML error on guide header.
