@@ -1,3 +1,6 @@
+# v0.1.8
+* Update non-default type files with provider flag
+
 # v0.1.6
 * Fixes for syntax, instructions, and removal of m1 types (#8)
  * Thanks @rberger!
