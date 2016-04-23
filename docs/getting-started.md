@@ -341,14 +341,14 @@ end
 #### Registry sparkles HEAT
 
 ~~~ruby
-SfnRegistry.register(:instance_flavor) do
+SfnRegistry.register(:instance_flavor, :provider => :heat) do
   ['m1.small', 'm1.medium']
 end
 ~~~
 
 #### Registry sparkles Azure
 ~~~ruby
-SfnRegistry.register(:instance_flavor) do
+SfnRegistry.register(:instance_flavor, :provider => :azure) do
   ['Standard_D1']
 end
 ~~~
@@ -375,7 +375,7 @@ end
 #### Component sparkles HEAT
 
 ~~~ruby
-SparkleFormation.component(:base) do
+SparkleFormation.component(:base, :provider => :heat) do
   heat_template_version '2015-04-30'
   description 'Sparkle Guide Compute Template'
 end
@@ -384,7 +384,7 @@ end
 #### Component sparkles Azure
 
 ~~~ruby
-SparkleFormation.component(:base) do
+SparkleFormation.component(:base, :provider => :azure) do
   set!('$schema', 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#')
   content_version '1.0.0.0'
 end
@@ -435,7 +435,7 @@ end
 #### Dynamic sparkles HEAT
 
 ~~~ruby
-SparkleFormation.dynamic(:node) do |name, opts={}|
+SparkleFormation.dynamic(:node, :provider => :heat) do |name, opts={}|
 
   parameters do
     set!("#{name}_image_id".to_sym).type 'String'
@@ -466,7 +466,7 @@ end
 #### Dynamic sparkles Azure
 
 ~~~~ruby
-SparkleFormation.dynamic(:node) do |name, opts={}|
+SparkleFormation.dynamic(:node, :provider => :azure) do |name, opts={}|
   parameters do
     set!("#{name}_image_id".to_sym) do
       type 'string'
