@@ -151,7 +151,7 @@ end
 #### Template sparkles HEAT
 
 ~~~ruby
-SparkleFormation.new(:compute, :provider => :heat) do
+SparkleFormation.new(:compute, :provider => :open_stack) do
   heat_template_version '2015-04-30'
   description 'Sparkle Guide Compute Template'
 
@@ -341,7 +341,7 @@ end
 #### Registry sparkles HEAT
 
 ~~~ruby
-SfnRegistry.register(:instance_flavor, :provider => :heat) do
+SfnRegistry.register(:instance_flavor, :provider => :open_stack) do
   ['m1.small', 'm1.medium']
 end
 ~~~
@@ -375,7 +375,7 @@ end
 #### Component sparkles HEAT
 
 ~~~ruby
-SparkleFormation.component(:base, :provider => :heat) do
+SparkleFormation.component(:base, :provider => :open_stack) do
   heat_template_version '2015-04-30'
   description 'Sparkle Guide Compute Template'
 end
@@ -435,7 +435,7 @@ end
 #### Dynamic sparkles HEAT
 
 ~~~ruby
-SparkleFormation.dynamic(:node, :provider => :heat) do |name, opts={}|
+SparkleFormation.dynamic(:node, :provider => :open_stack) do |name, opts={}|
 
   parameters do
     set!("#{name}_image_id".to_sym).type 'String'
@@ -569,7 +569,7 @@ end
 #### Template sparkles HEAT
 
 ~~~ruby
-SparkleFormation.new(:compute, :provider => :heat).load(:base).overrides do
+SparkleFormation.new(:compute, :provider => :open_stack).load(:base).overrides do
   dynamic!(:node, :sparkle)
 end
 ~~~
@@ -662,7 +662,7 @@ end
 #### Template sparkles HEAT
 
 ~~~ruby
-SparkleFormation.new(:compute, :provider => :heat).load(:base).overrides do
+SparkleFormation.new(:compute, :provider => :open_stack).load(:base).overrides do
   dynamic!(:node, :sparkle)
   dynamic!(:node, :unicorn)
 end
