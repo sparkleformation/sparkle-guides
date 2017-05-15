@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'sparkle-guides'
-  s.version = '0.1.9'
+  s.version = '0.1.10'
   s.summary = 'SparkleFormation Guides'
   s.author = 'Chris Roberts'
   s.email = 'chrisroberts.code@gmail.com'
