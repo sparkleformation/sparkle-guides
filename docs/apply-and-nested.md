@@ -407,6 +407,8 @@ Configuration.new do
     aws_access_key_id 'KEY'
     aws_secret_access_key 'SECRET'
     aws_region 'us-east-1'
+  end
+  locations do
     west_stacks do
       provider :aws
       aws_access_key_id 'KEY'
