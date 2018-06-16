@@ -26,8 +26,7 @@ anchors:
 
 ## Requirements
 
-* Ruby (Version `>=` 2.0)
-* Bundler
+* Ruby (Version `>=` 2.3)
 * Provider Credentials
 
 ### Installing Ruby
@@ -53,8 +52,10 @@ the provider:
 
 * [miasma-aws](https://github.com/miasma-rb/miasma-aws)
 * [miasma-azure](https://github.com/miasma-rb/miasma-azure)
+* [miasma-google](https://github.com/miasma-rb/miasma-google)
 * [miasma-open-stack](https://github.com/miasma-rb/miasma-open-stack)
 * [miasma-rackspace](https://github.com/miasma-rb/miasma-rackspace)
+* [miasma-terraform](https://github.com/miasma-rb/miasma-terraform)
 
 ## Installation
 
