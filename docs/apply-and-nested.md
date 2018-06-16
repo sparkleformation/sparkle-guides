@@ -1,5 +1,5 @@
 ---
-title: "Stack Interdependencies"
+title: "Stack Dependencies"
 weight: 2
 anchors:
   - title: "Overview"
