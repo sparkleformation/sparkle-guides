@@ -10,6 +10,8 @@ anchors:
     url: "#nested-stack-implementation"
   - title: "Apply nested stack"
     url: "#apply-nested-stack"
+  - title: "Cross location"
+    url: "#cross-location"
 ---
 
 ## Overview
@@ -390,3 +392,42 @@ You can destroy the all the `infrastructure` related stacks with the command:
 ~~~
 sfn destroy sparkle-guide-infrastructure
 ~~~
+
+## Cross location
+
+SparkleFormation supports accessing stacks in other locations when using the
+apply stack functionality. This is done by configuring named locations within
+the `.sfn` configuration file and then referencing the location when applying
+the stack. Using this example `.sfn` configuration file:
+
+~~~ruby
+Configuration.new do
+  credentials do
+    provider :aws
+    aws_access_key_id 'KEY'
+    aws_secret_access_key 'SECRET'
+    aws_region 'us-east-1'
+    west_stacks do
+      provider :aws
+      aws_access_key_id 'KEY'
+      aws_secret_access_key 'SECRET'
+      aws_region 'us-west-2'
+    end
+  end
+end
+~~~
+
+This configuration connects to the AWS API in us-east-1. It also includes configuration
+for connecting to us-west-2 via a named location of `west_stacks`. This allows referencing
+stacks located in us-west-2 when using the apply stack functionality. Assume a new stack
+is being created in us-east-1 (my-stack) and the outputs from other-stack in us-west-2
+should be applied. This can be accomplished with the following command:
+
+~~~
+sfn create my-stack --apply-stack west_stacks__my-stack
+~~~
+
+When the stack is created sfn will first connect to the us-west-2 API and gather the
+outputs from other-stack, then it will connect to us-east-1 to create the new stack.
+
+_NOTE: Custom locations are not required to have a common provider._
