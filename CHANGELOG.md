@@ -1,3 +1,7 @@
+# v0.1.12
+* Include cross location apply stack example
+* Start tips and tricks
+
 # v0.1.8
 * Update non-default type files with provider flag
 
